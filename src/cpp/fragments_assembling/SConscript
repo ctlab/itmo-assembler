@@ -1,0 +1,15 @@
+Import("env", "libboost_test")
+
+env.Object("../dna/dna.cc")
+env.Object("../dna/dnaq.cc")
+env.Object("../dna/nucleotide.cc")
+env.Object("../dna/simple_immutable_dna.cc")
+
+Import("buildTests")
+if buildTests:
+    env.Program(
+        "fragments_assembling_test",
+        ["fragments_assembling_test.cc", 
+         "../dna/dnaq.o", "../dna/dna.o", "../dna/simple_immutable_dna.o",
+         "../dna/nucleotide.o"],
+        LIBS=libboost_test)

@@ -1,0 +1,13 @@
+Import("env", "libboost_test")
+
+env.Object("../dna/nucleotide.cc")
+env.Object("../dna/dna.cc")
+env.Object("../dna/simple_immutable_dna.cc")
+
+Import("buildTests")
+if buildTests:
+    env.Program(
+        "kmer32_service_test",
+        ["kmer32_service_test.cc", "../dna/nucleotide.o", "../dna/dna.o",
+         "../dna/simple_immutable_dna.o"],
+        LIBS=libboost_test)

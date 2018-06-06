@@ -1,0 +1,189 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="genome-de-novo" default="first-build" basedir=".">
+    <property name="VERSION" value="1.5.2"/>
+    <tstamp>
+        <format property="TODAY" pattern="dd-MMM-yyyy" locale="en"/>
+    </tstamp>
+    <tstamp>
+        <format property="TODAY_TS" pattern="dd-MMM-yyyy HH:mm" locale="en"/>
+    </tstamp>
+
+    <property name="lib.dir" value="lib"/>
+    <property name="ant.build.javac.source" value="1.7"/>
+    <property name="ant.build.javac.target" value="1.7"/>
+
+    <condition property="dist.version.suffix" value="-b${build.number}" else="">
+        <isset property="build.number"/>
+    </condition>
+
+
+    <!-- Determine build version -->
+    <exec executable="hg" outputproperty="build.revision">
+        <arg value="id"/>
+        <arg value="-i"/>
+    </exec>
+
+    <condition property="dist.version" 
+            value="${VERSION} (build ${build.number}, revision ${build.revision} changes, ${TODAY_TS})"
+            else ="${VERSION} (build ${build.number}, revision ${build.revision}, ${TODAY})" >
+        <contains string="${build.revision}" substring="+"/>
+    </condition>
+    <echo message="${dist.version}" file="VERSION"/>
+    <echo message="Version: ${dist.version}"/>
+
+
+    <property name="dist.base.name" value="dist/itmo-assembler${dist.version.suffix}"/>
+
+    <property name="dist.jar.name" value="${dist.base.name}.jar"/>
+    <property name="dist.sh.name" value="${dist.base.name}.sh"/>
+    <property name="dist.bat.name" value="${dist.base.name}.bat"/>
+    <property name="dist.src.name" value="${dist.base.name}-src.jar"/>
+
+    <path id="class.path">
+        <fileset dir="lib/dev">
+            <include name="**/*.jar" />
+        </fileset>
+    </path>
+    <target name="first-build" depends="ivy.bootstrap,resolve,compile"/>
+
+
+    <target name="compile">
+        <mkdir dir="bin"/>
+        <mkdir dir="bin/java"/>
+        <javac srcdir="src/java" destdir="bin/java" debug="on">
+            <classpath refid="class.path"/>
+            <compilerarg value="-Xlint"/>
+            <compilerarg line="-encoding utf-8"/>
+        </javac>
+        <exec executable="sh" failonerror="true">
+            <arg value="./find_tools.sh"/>
+        </exec>
+    </target>
+
+    <target name="clean">
+        <delete failonerror="false" includeemptydirs="true">
+            <fileset dir="bin/java"/>
+            <fileset dir="bin/hadoop"/>
+            <fileset dir="bin/dependencies"/>
+            <fileset dir="bin/java-test"/>
+        </delete>
+    </target>
+
+    <target name="resolve" description="--> retrieve dependencies with ivy">
+        <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpath="${ivy.home}/${ivy.jar.name}"/>
+        <ivy:retrieve sync="true" pattern="${lib.dir}/[conf]/[artifact]-[revision](-[classifier]).[ext]" symlink="true"/>
+    </target>
+
+    <target name="clean-libs" description="--> clean libs">
+        <echo message="Deleting lib dir" />
+        <delete dir="${lib.dir}" />  
+    </target>
+
+    <target name="report">
+        <mkdir dir="report" />
+        <ivy:resolve type="${ivy.resolve.types}"/>
+        <ivy:report todir="report" />
+    </target>
+
+  <property name="ivy.jar.version" value="2.3.0"/>
+  <property name="ivy.jar.name" value="ivy-${ivy.jar.version}.jar"/>
+  <property name="ivy.home" value="${user.home}/.ivy2"/>
+  <available property="ivy.installed" file="${ivy.home}/${ivy.jar.name}"/>
+
+ 
+  <target name="ivy.install" unless="ivy.installed">
+    <mkdir dir="${ivy.home}"/>
+    <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.jar.version}/${ivy.jar.name}" dest="${ivy.home}/${ivy.jar.name}"/>
+  </target>
+ 
+
+  <target name="ivy.bootstrap" depends="ivy.install" unless="ivy.bootstrapped">
+    <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpath="${ivy.home}/${ivy.jar.name}"/>
+    <property name="ivy.bootstrapped" value="true"/> <!-- Avoid re-bootstrapping because it causes classloader issues. -->
+  </target>
+
+  
+  <target name="compile-tests" depends="compile">
+      <mkdir dir="bin"/>
+      <mkdir dir="bin/java-test"/>
+      <javac srcdir="test/java" destdir="bin/java-test" debug="on">
+          <classpath>
+              <path refid="class.path"/>
+              <pathelement path="bin/java"/>
+          </classpath>
+          <compilerarg value="-Xlint"/>
+      </javac>
+  </target>
+
+  <target name="test" depends="compile-tests">
+      <mkdir dir="test-report" />
+      <junit printsummary="yes" haltonfailure="no">
+          <classpath>
+              <pathelement path="bin/java-test/"/>
+              <pathelement path="bin/java/"/>
+              <path refid="class.path"/>
+          </classpath>
+          <formatter type="xml"/>
+          <batchtest fork="yes" todir="./test-report">
+              <fileset dir="./test/java">
+                  <include name="**/*Test.java"/>
+              </fileset>
+          </batchtest>
+      </junit>
+  </target>
+
+  <target name="package-prepare" depends="clean,resolve,compile">
+      <mkdir dir="bin/dependencies"/>
+      <unjar dest="bin/dependencies">
+          <fileset dir="lib/standalone" includes="**/*.jar"/>
+      </unjar>
+      <delete dir="bin/dependencies/it/unimi/dsi/fastutil/chars"/>
+      <delete dir="bin/dependencies/it/unimi/dsi/fastutil/doubles"/>
+      <delete dir="bin/dependencies/it/unimi/dsi/fastutil/floats"/>
+      <delete dir="bin/dependencies/it/unimi/dsi/fastutil/shorts"/>
+  </target>
+
+  <target name="hadoop" depends="package">
+  </target>
+
+  <target name="package-build">
+      <mkdir dir="dist"/>
+
+      <jar destfile="${dist.jar.name}" duplicate="preserve">
+          <fileset dir="bin/java"/>
+          <fileset file="log4j.properties"/>
+          <fileset dir="bin/dependencies"/>
+          <fileset dir="stuff" includes="images/*"/>
+          <fileset file="COPYING"/>
+          <fileset file="VERSION"/>
+          <fileset file="TOOLS"/>
+          <fileset file="config.properties"/> <!-- for hadoop -->
+          <manifest>
+              <attribute name="Main-Class"
+                  value="ru.ifmo.genetics.Runner"/>
+          </manifest>
+      </jar>
+
+      <concat destfile="${dist.sh.name}" binary="true">
+          <filelist files="src/stub.sh,${dist.jar.name}"/>
+      </concat> 
+      <chmod file="${dist.sh.name}" perm="a+x"/>
+
+      <concat destfile="${dist.bat.name}" binary="true">
+          <filelist files="src/stub.bat,${dist.jar.name}"/>
+      </concat>
+
+      <jar destfile="${dist.src.name}">
+          <fileset dir="src/java" includes="**/*.java"/>
+          <fileset file="log4j.properties"/>
+          <fileset file="COPYING"/>
+          <fileset file="VERSION"/>
+          <fileset file="TOOLS"/>
+          <fileset file="config.properties"/> <!-- for hadoop -->
+      </jar>
+  </target>
+
+
+  <target name="package" depends="package-prepare,package-build">
+  </target>
+
+</project>

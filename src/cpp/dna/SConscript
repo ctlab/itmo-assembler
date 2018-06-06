@@ -1,0 +1,23 @@
+Import("env", "libboost_test")
+
+env.Object("nucleotide.cc")
+env.Object("dna.cc")
+env.Object("simple_immutable_dna.cc")
+
+Import("buildTests")
+if buildTests:
+    env.Program(
+        "nucleotide_test",
+        ["nucleotide_test.cc", "nucleotide.o"],
+        LIBS=libboost_test)
+
+    env.Program(
+        "dnaq_test",
+        ["dnaq_test.cc", "nucleotide.o", "dna.o", "dnaq.cc"],
+        LIBS=libboost_test)
+
+    env.Program(
+        "simple_immutable_dna_test",
+        ["simple_immutable_dna_test.cc", "nucleotide.o", "dna.o",
+          "simple_immutable_dna.o"],
+        LIBS=libboost_test)

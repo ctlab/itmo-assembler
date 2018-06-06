@@ -1,0 +1,10 @@
+SConscript(dirs = [
+    "dna", 
+    "containers",
+    "io",
+    "scaffolding",
+    "kmer",
+    "debrujin",
+    "fragments_assembling"
+    ])
+

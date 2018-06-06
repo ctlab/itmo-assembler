@@ -1,0 +1,9 @@
+Import("env", "libboost_test")
+
+Import("buildTests")
+if buildTests:
+    #env.Program("tree_set_test.cc", LIBS=libboost_test)
+
+    env.Program("hash_set_test.cc", LIBS=libboost_test)
+
+    env.Program("hash_multimap_test.cc", LIBS=libboost_test)

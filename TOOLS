@@ -1,0 +1,29 @@
+WDBGraph-builder                         ru.ifmo.genetics.tools.irf.GraphBuilder                                          builds weighted De Bruijn graph from a set of reads
+assembler                                ru.ifmo.genetics.tools.Assembler                                                 assembles contigs from paired-end reads with indels
+assembly-statistics                      ru.ifmo.genetics.tools.olc.AssemblyStatistics                                    calculates simply statistics on assembled contigs
+cleaner                                  ru.ifmo.genetics.tools.ec.simple.Cleaner                                         performs error correction
+connected-components                     ru.ifmo.genetics.tools.transcriptome.ConnectedComponentsAssembler                show connected components in De Bruijn graph
+contigs-assembler                        ru.ifmo.genetics.tools.olc.ContigsAssembler                                      assembles contigs from quasicontigs
+db-graph-builder                         ru.ifmo.genetics.tools.rf.GraphBuilder                                           builds De Bruijn graph from a set of (k+1)-mers
+error-corrector-olc-based                ru.ifmo.genetics.tools.ec.olcBased.ErrorCorrector                                corrects errors using olc-based method
+error-corrector-simple                   ru.ifmo.genetics.tools.ec.simple.SimpleErrorCorrector                            corrects errors
+fastq-trimmer                            ru.ifmo.genetics.tools.converters.FastqTrimmer                                   trims paired fastq files to the same length
+fixes-applier                            ru.ifmo.genetics.tools.ec.simple.FixesApplier                                    applies fixes
+hadoop-contigs-joiner                    ru.ifmo.genetics.tools.microassembly.HadoopJoinContigs                           Runs microassembly, thus joining contigs to bigger ones
+holes2overlaps                           ru.ifmo.genetics.tools.microassembly.HolesToOverlapsConverter                    converts holes to overlaps
+indel-assembler                          ru.ifmo.genetics.tools.IndelAssembler                                            assembles contigs from paired-end reads with indels
+indel-quasicontigs-assembler             ru.ifmo.genetics.tools.irf.QuasicontigsAssembler                                 assembles quasicontigs from paired-end reads with indels
+kmer-statistics-gatherer                 ru.ifmo.genetics.tools.ec.KmerStatisticsGatherer                                 differentiates good kmers from bad ones
+microassembly                            ru.ifmo.genetics.tools.microassembly.Microassembly                               runs microassembly
+overlap-graph-simplification             ru.ifmo.genetics.tools.olc.simplification.GraphSimplification                    simplifies overlap graph using coverage and repeat model
+quasicontigs-assembler                   ru.ifmo.genetics.tools.rf.QuasicontigsAssembler                                  assembles quasicontigs from paired-end reads
+read-length-stat                         ru.ifmo.genetics.tools.ReadLengthStat                                            prints read length distribution
+reads-filler                             ru.ifmo.genetics.tools.irf.ReadsFiller                                           fills gaps in paired reads with indel errors
+reads-filler-simple                      ru.ifmo.genetics.tools.rf.ReadsFiller                                            fills gaps in paired reads
+reads-merger                             ru.ifmo.genetics.tools.rf.ReadsMerger                                            merges not truncated original reads and truncated corrected reads
+scaffolder                               ru.ifmo.genetics.tools.Scaffolder                                                make scaffolds from contigs using magic
+small-components-assembler               ru.ifmo.genetics.tools.transcriptome.SmallComponentsAssembler                    assembles obvious transcripts
+small-transcripts-assembler              ru.ifmo.genetics.tools.SmallTranscriptsAssembler                                 assembles obvious transcripts
+to-binq-converter                        ru.ifmo.genetics.tools.io.ToBinqConverter                                        converts input files to binq format
+to-fastq-converter                       ru.ifmo.genetics.tools.io.ToFastqConverter                                       converts input files to fastq format
+transcriptome-assembler                  ru.ifmo.genetics.tools.TranscriptomeAssembler                                    transcriptome assembler

@@ -1,0 +1,26 @@
+Import("env", "libboost_test")
+
+env.Object("../dna/dna.cc")
+env.Object("../dna/simple_immutable_dna.cc")
+env.Object("../dna/nucleotide.cc")
+
+env.Program(
+    "build_graph",
+    ["build_graph.cc", "contigs_graph_builder.cc", 
+     "../dna/simple_immutable_dna.o", "../dna/dna.o",
+     "../dna/nucleotide.o"])
+
+env.Program(
+    "build_scaffolds",
+    ["build_scaffolds.cc", "contigs_graph.cc", 
+     "../dna/simple_immutable_dna.o", "../dna/dna.o",
+     "../dna/nucleotide.o"])
+
+Import("buildTests")
+if buildTests:
+    env.Program(
+        "contigs_graph_builder_test",
+        ["contigs_graph_builder_test.cc", "contigs_graph_builder.cc", 
+         "../dna/simple_immutable_dna.o", "../dna/dna.o",
+         "../dna/nucleotide.o"],
+        LIBS=libboost_test)
