@@ -5,8 +5,6 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.*;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import ru.ifmo.genetics.Runner;
 import ru.ifmo.genetics.utils.Misc;
@@ -539,7 +537,21 @@ public abstract class Tool {
 
         try {
             if (e instanceof OutOfMemoryError) {
-                error(mainLogger, "Out of memory error! Try to increase memory via option -m <arg>", null);
+                String curMemory = "unavailable";
+                try {
+                    curMemory = Misc.totalMemoryWithoutRunningGCAsString() + ", used = " + Misc.usedMemoryWithoutRunningGCAsString();
+                } catch (Error e2) {
+                }
+                error(mainLogger,
+                        "Out of memory error! Try to increase memory via option -m <arg>\n" +
+                                "Current total memory = " + curMemory,
+                        null);
+                mainLogger.trace("", e);
+            } else if (e instanceof IllegalArgumentException) {
+                error(mainLogger, e, null);
+                mainLogger.trace("", e);
+            } else if (e instanceof InputMismatchException) {
+                error(mainLogger, e, null);
                 mainLogger.trace("", e);
             } else {
                 error(mainLogger, "Uncaught exception: " + e, e);
@@ -1064,11 +1076,13 @@ public abstract class Tool {
         if (curProgress.length() > 0) {
             System.err.println();
         }
-        logger.error(getPrefix(false, false, "ERROR: ", logger) + message, e);
+        System.err.println("--");
+        logger.error(getPrefix(false, false, "ERROR: ", logger) + message + "\n--", e);
     }
     public static void warn(Logger logger, Object message) {
         clearProgressImpl();
-        logger.warn(getPrefix(false, true, "WARN: ", logger) + message);
+        System.err.println("");
+        logger.warn(getPrefix(false, true, "WARNING! ", logger) + message + "\n");
         System.err.print(curProgress);
     }
     public static void info(Logger logger, Object message) {

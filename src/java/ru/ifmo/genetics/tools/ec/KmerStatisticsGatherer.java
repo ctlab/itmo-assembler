@@ -110,6 +110,15 @@ public class KmerStatisticsGatherer extends Tool {
 
     @Override
     protected void runImpl() throws ExecutionFailedException {
+        if (k.get() <= 0) {
+            error("The size of k-mer must be at least 1.");
+            System.exit(1);
+        }
+        if (k.get() > 31) {
+            error("Maximum value of k-mer size is 31.");
+            System.exit(1);
+        }
+
 
         LEN = k.get();
         MASK = (1L << (2 * LEN)) - 1;
@@ -124,6 +133,13 @@ public class KmerStatisticsGatherer extends Tool {
         } catch (IOException e) {
             throw new ExecutionFailedException("Couldn't load kmers", e);
         }
+        if (hm.size() == 0) {
+            error("No k-mers found in input reads. " +
+                    "Please check k-mer size parameter and/or reads' length distribution.");
+            System.exit(1);
+        }
+        debug("hm.size() = " + NumUtils.groupDigits(hm.size()));
+        long totalKmers = hm.size();
 
         int[] stat = new int[256];
         for (int i = 0; i < hm.hm.length; ++i) {
@@ -144,12 +160,19 @@ public class KmerStatisticsGatherer extends Tool {
 
         int threshold = maximalBadFrequency.get();
         if (threshold == -1) {
-            for (int i = 2; i < 255; ++i) {
+            // searching second peak
+            long skipped = stat[1];
+            for (int i = 2; (i <= 20) && (skipped / totalKmers <= 0.80); ++i) {
+                // i.e. allow to discard no more than 80% of all k-mers
                 if ((stat[i - 1] >= stat[i]) && (stat[i] < stat[i + 1])) {
                     threshold = i;
                     break;
                 }
+                skipped += stat[i];
             }
+        }
+        if (threshold == -1) {
+            threshold = 1;
         }
         info("Threshold = " + threshold);
         if (prefixLength != 0) {
@@ -185,8 +208,8 @@ public class KmerStatisticsGatherer extends Tool {
         } catch (IOException e) {
             throw new ExecutionFailedException(e);
         }
-        info("Total good kmers: " + totalGood);
-        info("Total bad kmers:  " + totalBad);
+        info(String.format("Total bad kmers : %12s", NumUtils.groupDigits(totalBad)));
+        info(String.format("Total good kmers: %12s", NumUtils.groupDigits(totalGood)));
         badKmersNumberOutValue.set(totalBad);
 
     }
@@ -209,6 +232,11 @@ public class KmerStatisticsGatherer extends Tool {
 
     ArrayLong2IntHashMap load(File[] files, long maxSize, long prefix, long prefixMask, int prefixLength) throws IOException {
         info("Loading input reads...");
+
+        if (files.length == 0) {
+            error("No input files provided!", new IllegalArgumentException());
+            System.exit(1);
+        }
         
         ArrayLong2IntHashMap hm = new ArrayLong2IntHashMap((int)(Math.log(availableProcessors.get()) / Math.log(2)) + 4);
         Source<DnaQ> reader = ReadersUtils.readDnaQLazy(files);

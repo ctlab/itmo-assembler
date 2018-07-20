@@ -37,6 +37,11 @@ public class Misc {
         Runtime rt = Runtime.getRuntime();
         return rt.totalMemory() - rt.freeMemory();
     }
+    public static long totalMemoryWithoutRunningGC() {
+        Runtime rt = Runtime.getRuntime();
+        return rt.totalMemory();
+    }
+
 
 
     public static String availableMemoryAsString() {
@@ -50,6 +55,9 @@ public class Misc {
     }
     public static String usedMemoryWithoutRunningGCAsString() {
         return NumUtils.memoryAsString(usedMemoryWithoutRunningGC());
+    }
+    public static String totalMemoryWithoutRunningGCAsString() {
+        return NumUtils.memoryAsString(totalMemoryWithoutRunningGC());
     }
 
     public static String availableMemoryAsStringForJVM() {

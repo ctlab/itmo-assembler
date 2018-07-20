@@ -242,6 +242,10 @@ public class ReadsFiller extends Tool {
                     minSize = Math.max(0, minSize - stdDev);
                     maxSize += stdDev;
                     stats[j][i] = stats[i][j] = new PairedLibraryInfo(minSize, maxSize, avgSize, stdDev);
+                } else {
+                    debug("HERE report  --start--  ");
+                    debug(ft.fillingReport.toString());
+                    debug("HERE report   --end--  ");
                 }
             }
         }
@@ -295,6 +299,9 @@ public class ReadsFiller extends Tool {
             ZippingPairedLibrary<LightDnaQ> library = ZippingPairedLibrary.create(sources.get(i), sources.get(j), stats[i][j]);
             info("Found paired-end library: " + library.name() + " (" + stats[i][j] + ")");
             libraries.add(library);
+        }
+        if (libraries.size() == 0) {
+            warn("No paired-end libraries found!  Is this ok?");
         }
         return libraries;
     }

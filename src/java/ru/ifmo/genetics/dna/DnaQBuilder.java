@@ -80,7 +80,7 @@ public class DnaQBuilder {
     public static DnaQ convert(char[] data, int dataFrom, int dataTo,
                                char[] qual, int qualFrom, int qualTo, QualityFormat qf) {
         if (dataTo - dataFrom != qualTo - qualFrom) {
-            throw new InputMismatchException("Bad dnaq record: length of chars and quality is not the same. " +
+            throw new InputMismatchException("Bad DnaQ record: length of chars and quality is not the same. " +
                     "File is corrupted/Format mismatch.");
         }
 

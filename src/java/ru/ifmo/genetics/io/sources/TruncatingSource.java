@@ -5,8 +5,8 @@ import ru.ifmo.genetics.utils.iterators.ProgressableIterator;
 
 import java.util.Iterator;
 
-public class TruncatingSource implements Source<DnaQ> {
-	Source internalSource;
+public class TruncatingSource implements NamedSource<DnaQ> {
+	NamedSource internalSource;
     int phredThreshold;
 
     public long getSumLen() {
@@ -17,10 +17,15 @@ public class TruncatingSource implements Source<DnaQ> {
         return sumTrustLen;
     }
 
+    @Override
+    public String name() {
+        return internalSource.name() + " (truncated)";
+    }
+
     private long sumLen;
     private long sumTrustLen;
 
-	public TruncatingSource(Source internalSource, int phredThreshold) {
+	public TruncatingSource(NamedSource internalSource, int phredThreshold) {
         this.internalSource = internalSource;
         this.phredThreshold = phredThreshold;
 	}

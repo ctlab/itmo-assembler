@@ -65,7 +65,7 @@ public class FastqReader implements NamedSource<DnaQ> {
             char[] qual = sQual.toCharArray();
 
             if (data.length != qual.length) {
-                throw new InputMismatchException("Bad dnaq record: length of chars and quality is not the same. " +
+                throw new InputMismatchException("Bad DnaQ record: length of chars and quality is not the same. " +
                         "File is corrupted/Format mismatch.");
             }
 

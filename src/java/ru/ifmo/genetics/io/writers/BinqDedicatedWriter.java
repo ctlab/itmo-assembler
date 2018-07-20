@@ -1,11 +1,13 @@
 package ru.ifmo.genetics.io.writers;
 
+import org.apache.log4j.Logger;
 import ru.ifmo.genetics.dna.DnaQ;
 import ru.ifmo.genetics.dna.LightDnaQ;
 import ru.ifmo.genetics.io.CommentableSink;
 import ru.ifmo.genetics.io.IOUtils;
 import ru.ifmo.genetics.io.Sink;
 import ru.ifmo.genetics.io.formats.QualityFormat;
+import ru.ifmo.genetics.io.sources.NamedSource;
 import ru.ifmo.genetics.utils.tool.Tool;
 
 import java.io.*;
@@ -32,9 +34,20 @@ public class BinqDedicatedWriter extends AbstractDedicatedWriter<DnaQ> {
         writeDataStatic(data, out);
     }
 
+
     static void writeDataStatic(Iterable<DnaQ> data, OutputStream out) throws IOException {
+        writeDataStatic(data, out, false);
+    }
+    static void writeDataStatic(Iterable<DnaQ> data, OutputStream out, boolean checkNoReads) throws IOException {
         for (DnaQ dnaq : data) {
             IOUtils.putByteArray(dnaq.toByteArray(), out);
+        }
+        if (checkNoReads && !data.iterator().hasNext()) {
+            String name = "no_name";
+            if (data instanceof NamedSource) {
+                name = ((NamedSource<DnaQ>) data).name();
+            }
+            throw new IllegalArgumentException("No reads found in input library '" +name+ "'!");
         }
     }
 

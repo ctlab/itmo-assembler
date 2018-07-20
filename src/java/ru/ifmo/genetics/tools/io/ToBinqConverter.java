@@ -1,7 +1,5 @@
 package ru.ifmo.genetics.tools.io;
 
-import ru.ifmo.genetics.io.writers.BinqDedicatedWriter;
-import ru.ifmo.genetics.io.writers.DoubleFastaWriter;
 import ru.ifmo.genetics.io.writers.WritersUtils;
 import ru.ifmo.genetics.utils.FileUtils;
 import ru.ifmo.genetics.utils.tool.ExecutionFailedException;
@@ -48,7 +46,7 @@ public class ToBinqConverter extends Tool {
 
             try {
                 if (f.getName().toLowerCase().endsWith(".binq")) {
-                    info("File " + f.getName() + " is already in binq format");
+                    info("File " + f.getName() + " already in binq format");
                     FileUtils.copyFile(f, outFile);
                     continue;
                 }

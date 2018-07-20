@@ -71,7 +71,7 @@ public class BufferDedicatedWriter implements Runnable {
         writingThreads.increase();
         try {
             while ((freeBuffers.size() != BUFFERS_NUMBER) || !finished) {
-                ByteBuffer buffer = buffersToWrite.poll(1, TimeUnit.SECONDS);
+                ByteBuffer buffer = buffersToWrite.poll(100, TimeUnit.MILLISECONDS);
                 if (buffer == null) {
                     continue;
                 }

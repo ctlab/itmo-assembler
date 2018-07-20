@@ -5,7 +5,9 @@ import ru.ifmo.genetics.dna.LightDna;
 import ru.ifmo.genetics.dna.LightDnaQ;
 import ru.ifmo.genetics.io.formats.Illumina;
 import ru.ifmo.genetics.io.formats.QualityFormat;
+import ru.ifmo.genetics.io.sources.NamedSource;
 import ru.ifmo.genetics.utils.FileUtils;
+import ru.ifmo.genetics.utils.IteratorUtils;
 
 import java.io.*;
 import java.util.zip.GZIPOutputStream;
@@ -78,7 +80,7 @@ public class WritersUtils {
 
     public static void writeDnaQsToBinqFile(Iterable<DnaQ> data, File file) throws IOException {
         OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
-        BinqDedicatedWriter.writeDataStatic(data, out);
+        BinqDedicatedWriter.writeDataStatic(data, out, true);       // throws IllegalArgumentException on empty file
         out.close();
     }
 
