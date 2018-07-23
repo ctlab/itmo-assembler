@@ -56,4 +56,12 @@ public abstract class Report {
             c.reset();
         }
     }
+    public long getCounterCurrentValue(String name) {
+        for (Counter counter : counters) {
+            if (counter.name.equals(name)) {
+                return counter.value();
+            }
+        }
+        return -1;
+    }
 }

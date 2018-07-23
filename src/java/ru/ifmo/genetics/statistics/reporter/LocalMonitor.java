@@ -5,8 +5,8 @@ import org.apache.log4j.Logger;
 import ru.ifmo.genetics.utils.tool.Tool;
 
 public class LocalMonitor implements Runnable {
-    private Logger log;
-    private Report report;
+    private final Logger log;
+    private final Report report;
     private final static int INITIAL_INTERVAL_MS = 1000;
     private final static int MAXIMAL_INTERVAL_MS = 60000;
     private String oldReport = null;
@@ -36,9 +36,9 @@ public class LocalMonitor implements Runnable {
             return;
         }
 
-        if (currentReport.equals(oldReport)) {
-            return;
-        }
+//        if (currentReport.equals(oldReport)) {
+//            return;
+//        }
         Tool.debug(log, currentReport);
         oldReport = currentReport;
     }
