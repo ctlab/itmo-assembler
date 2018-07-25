@@ -36,6 +36,14 @@ public class QuasicontigsAssembler extends Tool {
             .withDefaultValue(workDir.append("quasicontigs"))
             .create());
 
+    public final Parameter<Integer> notUsingFrequency = addParameter(new IntParameterBuilder("not-using-frequency")
+            .withDefaultValue(0)
+            .withDescriptionShort("Non-using k-mer frequency")
+            .withDescription("maximal frequency of non-using k-mers (0 = using all k-mers)")
+            .withDescriptionRuShort("частота неиспользуемых k-mer'ов")
+            .withDescriptionRu("Максимальная частота неиспользуемых k-mer'ов при построении графа де Брейна")
+            .create());
+
 
 
     // tools
@@ -70,7 +78,10 @@ public class QuasicontigsAssembler extends Tool {
         setFixDefault(kmerDumper.outputDir);
         setFixDefault(kmerDumper.outputPrefixesFile);
         setFixDefault(kmerDumper.maxSize);
-        setFix(kmerDumper.maximalBadFrequency, 1);
+
+//        setFix(kmerDumper.maximalBadFrequency, 1);
+        setFix(kmerDumper.maximalBadFrequency, notUsingFrequency);
+
         setFix(kmerDumper.kmerIteratorFactory, new MutableBigKmerIteratorFactory());
         addSubTool(kmerDumper);
     }

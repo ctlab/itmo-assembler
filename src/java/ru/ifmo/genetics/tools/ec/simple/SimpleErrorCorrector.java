@@ -120,7 +120,7 @@ public class SimpleErrorCorrector extends Tool {
 
     @Override
     protected void runImpl() throws ExecutionFailedException {
-        debug("K-mer size = " + k.get());
+        info("K-mer size = " + k.get());
 
         addStep(converter);
         addStep(truncater);

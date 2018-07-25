@@ -62,14 +62,14 @@ public class Overlapper extends Tool {
     public final Parameter<Integer> errorsNumber = addParameter(new IntParameterBuilder("errors-number")
             .optional()
             .withShortOpt("en")
-            .withDefaultValue(2)
+            .withDefaultValue(3)
             .withDescription("number of allowed errors while searching overlaps between quasicontigs")
             .create());
 
     public final Parameter<Integer> errorsWindowSize = addParameter(new IntParameterBuilder("errors-window-size")
             .optional()
             .withShortOpt("ews")
-            .withDefaultValue(100)
+            .withDefaultValue(20)
             .withDescription("errors window size while searching overlaps between quasicontigs")
             .create());
 

@@ -31,7 +31,7 @@ public class Assembler extends Tool {
 
     public final Parameter<Integer> kParameter = addParameter(new IntParameterBuilder("k-mer")
             .withShortOpt("k")
-            .withDefaultValue(27)
+            .withDefaultValue(21)
             .withDescriptionShort("k-mer size")
             .withDescription("k-mer size (used in de Bruijn graph, quasicontigs assembler)")
             .withDescriptionRuShort("Длина k-мера")

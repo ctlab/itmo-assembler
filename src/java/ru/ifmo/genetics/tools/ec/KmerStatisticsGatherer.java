@@ -30,8 +30,8 @@ public class KmerStatisticsGatherer extends Tool {
     public final Parameter<Integer> maximalBadFrequency = addParameter(new IntParameterBuilder("maximal-bad-frequency")
             .withShortOpt("b")
             .withDefaultValue(-1)
-            .withDefaultComment("-1 (auto)")
-            .withDescriptionShort("Max bad frequency")
+//            .withDefaultComment("-1 (auto)")
+            .withDescriptionShort("Maximal bad frequency")
             .withDescription("maximal frequency for a k-mer to be assumed erroneous (-1 = auto, 0 = all k-mers are good)")
             .withDescriptionRuShort("Макс. частота ошибочного k-mer'а")
             .withDescriptionRu("Максимальная частота k-mer'a для принятия его как ошибочного (в исправлении ошибок)")
@@ -165,7 +165,7 @@ public class KmerStatisticsGatherer extends Tool {
             for (int i = 2; (i <= 20) && (skipped / totalKmers <= 0.80); ++i) {
                 // i.e. allow to discard no more than 80% of all k-mers
                 if ((stat[i - 1] >= stat[i]) && (stat[i] < stat[i + 1])) {
-                    threshold = i;
+                    threshold = i - 1;
                     break;
                 }
                 skipped += stat[i];
