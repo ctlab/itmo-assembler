@@ -51,7 +51,7 @@ public class ReadersUtils {
                 || fileName.endsWith(".fna")) {
             return "fasta" + suffix;
         }
-        throw new IOException("Can't detect file format for file " + fileName);
+        throw new IOException("Can't detect file format for file '" + fileName + "'");
     }
 
 

@@ -29,10 +29,9 @@ public class KmerStatisticsGatherer extends Tool {
 
     public final Parameter<Integer> maximalBadFrequency = addParameter(new IntParameterBuilder("maximal-bad-frequency")
             .withShortOpt("b")
-            .withDefaultValue(-1)
-//            .withDefaultComment("-1 (auto)")
+            .withDefaultValue(1)
             .withDescriptionShort("Maximal bad frequency")
-            .withDescription("maximal frequency for a k-mer to be assumed erroneous (-1 = auto, 0 = all k-mers are good)")
+            .withDescription("maximal frequency for a k-mer to be assumed erroneous (0 = all k-mers are good)")
             .withDescriptionRuShort("Макс. частота ошибочного k-mer'а")
             .withDescriptionRu("Максимальная частота k-mer'a для принятия его как ошибочного (в исправлении ошибок)")
             .create());
@@ -162,7 +161,7 @@ public class KmerStatisticsGatherer extends Tool {
         if (threshold == -1) {
             // searching second peak
             long skipped = stat[1];
-            for (int i = 2; (i <= 20) && (skipped / totalKmers <= 0.80); ++i) {
+            for (int i = 2; (i <= 10) && (skipped / totalKmers <= 0.80); ++i) {
                 // i.e. allow to discard no more than 80% of all k-mers
                 if ((stat[i - 1] >= stat[i]) && (stat[i] < stat[i + 1])) {
                     threshold = i - 1;
@@ -170,9 +169,9 @@ public class KmerStatisticsGatherer extends Tool {
                 }
                 skipped += stat[i];
             }
-        }
-        if (threshold == -1) {
-            threshold = 1;
+            if (threshold == -1) {
+                threshold = 1;
+            }
         }
         info("Threshold = " + threshold);
         if (prefixLength != 0) {
