@@ -4,11 +4,18 @@ It had been developed by the team of researchers from Genome Assembly Algorithms
 Active development of the software had been conducted from 2010 to 2016. Currently the main functionality of the assembler is supported, but without further improvements.
 
 
-
 Supported sequencing technologies - *Illumina*/*Solexa*, *Ion Torrent* (with indel errors) and *Sanger*.<br/>
 Assembler can use both paired reads (paired-end, mate-pair) as well as unpaired ones.<br/>
 The assembly can be started both from command line as well as from simple and clear graphical user interface:<br/>
 <a href="GUI-0.1.3.png"><img align="center" src="GUI-0.1.3.png" height="400" alt="GUI example" /></a>
+
+
+## Content
+
+* [First run](#first-run)
+* [Examples](#examples)
+* [Publications](#publications)
+* [Contact](#contact)
 
 
 ## First run
@@ -57,7 +64,7 @@ N90: 641'766
 Assembled contigs will be placed in `workDir/contigs.fasta`. `workDir` directory is created in the directory, from which the assembler was started.<br/><br/>
 
 
-**Example 2.** Download files with paired reads (left and right reads) -- [test2_pair1.fastq](https://github.com/ctlab/itmo-assembler/raw/master/test_data/test2_pair1.fastq) and [test2_pair2.fastq](https://github.com/ctlab/itmo-assembler/raw/master/test_data/test2_pair2.fastq).<br/>
+**Example 2.** Download files with paired reads (left and right reads) — [test2_pair1.fastq](https://github.com/ctlab/itmo-assembler/raw/master/test_data/test2_pair1.fastq) and [test2_pair2.fastq](https://github.com/ctlab/itmo-assembler/raw/master/test_data/test2_pair2.fastq).<br/>
 Start the assembly via command
 ~~~
 itmo-assembler.sh -i test2_pair1.fastq test2_pair2.fastq
@@ -94,7 +101,7 @@ Previous versions of the assembler can be found at [genome.ifmo.ru/files/softwar
 <br/><br/>
 
 
-Based on the assembler code, several tools have been developed -- such as [MetaFast](http://dx.doi.org/10.1093/bioinformatics/btw312) and [MetaCherchant](https://doi.org/10.1093/bioinformatics/btx681).
+Based on the assembler code, several tools have been developed — such as [MetaFast](http://dx.doi.org/10.1093/bioinformatics/btw312) and [MetaCherchant](http://dx.doi.org/10.1093/bioinformatics/btx681).
 
 
 ## Contact
