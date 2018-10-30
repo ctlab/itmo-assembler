@@ -8,7 +8,7 @@ Currently the main functionality of the assembler is supported, but without furt
 Supported sequencing technologies - *Illumina*/*Solexa*, *Ion Torrent* (with indel errors) and *Sanger*.<br/>
 Assembler can use both paired reads (paired-end, mate-pair) as well as unpaired ones.<br/>
 The assembly can be started both from command line as well as from simple and clear graphical user interface:<br/>
-<a href="GUI-0.1.3.png"><img align="center" src="GUI-0.1.3.png" height="400" alt="GUI example" /></a>
+<a href="GUI-paired.png"><img align="center" src="GUI-paired.png" height="400" alt="GUI example" /></a>
 
 
 ## Content
