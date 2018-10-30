@@ -8,7 +8,11 @@ Currently the main functionality of the assembler is supported, but without furt
 Supported sequencing technologies - *Illumina*/*Solexa*, *Ion Torrent* (with indel errors) and *Sanger*.<br/>
 Assembler can use both paired reads (paired-end, mate-pair) as well as unpaired ones.<br/>
 The assembly can be started both from command line as well as from simple and clear graphical user interface:<br/>
-<a href="GUI-paired.png"><img align="center" src="GUI-paired.png" height="400" alt="GUI example" /></a>
+
+<p align="center">
+  <img src="GUI-paired.png" height="400" alt="GUI example" />
+</p>
+
 
 
 ## Content
@@ -47,7 +51,9 @@ Start the assembly via command
 itmo-assembler.sh -i test1_unpaired.fastq
 ~~~
 or using graphical user interface:<br/>
-<a href="GUI-unpaired.png"><img align="center" src="GUI-unpaired.png" height="400" alt="IMG" /></a>
+<p align="center">
+  <img src="GUI-unpaired.png" height="400" alt="IMG" />
+</p>
 
 
 After the assembly will finish, assembled contigs' statistics will be printed:<br/>
@@ -71,7 +77,9 @@ Start the assembly via command
 itmo-assembler.sh -i test2_pair1.fastq test2_pair2.fastq
 ~~~
 or using graphical user interface:<br/>
-<a href="GUI-paired.png"><img align="center" src="GUI-paired.png" height="400" alt="IMG" /></a>
+<p align="center">
+  <img src="GUI-paired.png" height="400" alt="IMG" />
+</p>
 
 After the assembly will finish, assembled contigs' statistics will be printed:<br/>
 ```
