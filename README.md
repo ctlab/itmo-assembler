@@ -10,7 +10,7 @@ Assembler can use both paired reads (paired-end, mate-pair) as well as unpaired 
 The assembly can be started both from command line as well as from simple and clear graphical user interface:<br/>
 
 <p align="center">
-  <img src="GUI-paired.png" height="400" alt="GUI example" />
+  <img src="GUI-paired.png" height="350" alt="GUI example" />
 </p>
 
 
@@ -52,7 +52,7 @@ itmo-assembler.sh -i test1_unpaired.fastq
 ~~~
 or using graphical user interface:<br/>
 <p align="center">
-  <img src="GUI-unpaired.png" height="400" alt="IMG" />
+  <img src="GUI-unpaired.png" height="350" alt="IMG" />
 </p>
 
 
@@ -78,7 +78,7 @@ itmo-assembler.sh -i test2_pair1.fastq test2_pair2.fastq
 ~~~
 or using graphical user interface:<br/>
 <p align="center">
-  <img src="GUI-paired.png" height="400" alt="IMG" />
+  <img src="GUI-paired.png" height="350" alt="IMG" />
 </p>
 
 After the assembly will finish, assembled contigs' statistics will be printed:<br/>
