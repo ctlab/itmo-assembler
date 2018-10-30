@@ -1,7 +1,8 @@
 **ITMO *de novo* Genome Assembler** is a software for assembling small and middle-sized genomes with ease. <br/>
 It had been developed by the team of researchers from Genome Assembly Algorithms Laboratory (now — bioinformatics group in [Computer Technologies Laboratory](http://ctlab.ifmo.ru/)) at ITMO University with the participation of the "Bioengineering" center of Russian Academy of Sciences. 
 
-Active development of the software had been conducted from 2010 to 2016. Currently the main functionality of the assembler is supported, but without further improvements.
+Active development of the software had been conducted from 2010 to 2016. <br/>
+Currently the main functionality of the assembler is supported, but without further improvements.
 
 
 Supported sequencing technologies - *Illumina*/*Solexa*, *Ion Torrent* (with indel errors) and *Sanger*.<br/>
@@ -32,7 +33,7 @@ Download:
 
 
 After running this command the graphical user interface will arise.<br/>
-If you want to work with the assembler from the command line, add `-h` option to the command and the assembler prints the instruction how to start the assembly.
+If you want to work with the assembler from the command line, add `-h` option to the command and the assembler will print the instructions how to start the assembly.
 
 Before starting the assembly please make sure that there is enough free space on your hard drive. The assembler makes temporary files in working directory in order to be able to continue run from any stage.
 
@@ -40,7 +41,7 @@ Before starting the assembly please make sure that there is enough free space on
 
 ## Examples
 
-**Example 1.** Download [test1_unpaired.fastq](https://github.com/ctlab/itmo-assembler/raw/master/test_data/test1_unpaired.fastq) from `test_data` directory.<br/>
+**Example 1.** Download file with unpaired reads [test1_unpaired.fastq](https://github.com/ctlab/itmo-assembler/raw/master/test_data/test1_unpaired.fastq) from `test_data` directory.<br/>
 Start the assembly via command
 ~~~
 itmo-assembler.sh -i test1_unpaired.fastq
