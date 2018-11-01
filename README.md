@@ -29,7 +29,7 @@ To run the assembler *JRE* 1.6 or higher is required (you can download it <a hre
 No other packages are required, you only need to download one running script.
 
 
-You can download it from the last stable release in the GitHub ['Releases' page](https://github.com/ctlab/metafast/releases).<br/>
+You can download running script from the last stable release in the GitHub ['Releases' page](https://github.com/ctlab/itmo-assembler/releases).<br/>
 Download:
 * `itmo-assembler.sh` — for Unix-like OS (tested on Ubuntu, Debian and Mac OS). After downloading add a permission to run the script via command `chmod +x itmo-assembler.sh` and run it via `./itmo-assembler.sh`.
 * `itmo-assembler.bat` — for Windows OS (tested on Windows 7); 
