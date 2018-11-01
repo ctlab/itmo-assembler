@@ -13,10 +13,12 @@ import ru.ifmo.genetics.utils.tool.inputParameterBuilder.BoolParameterBuilder;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
@@ -181,10 +183,10 @@ public class GUI extends JPanel {
            /* 18 */      {"Start from the beginning and rewrite old files", "Начать сборку с начала и перезаписать старые файлы"},
            /* 19 */      {"Continue the previous run", "Продолжить выполнение прошлого запуска"},
            /* 20 */      {"Do nothing", "Ничего не делать"},
-           /* 21 */      {"Assembly process isn't running now!", "Процесс сборки сейчас не выполняется!"},
+           /* 21 */      {"Assembly isn't running now!", "Процесс сборки сейчас не выполняется!"},
            /* 22 */      {"No input files were selected!", "Файлы с исходными чтениями не выбраны!"},
            /* 23 */      {"An exception occurred during assembly process:", "Произошла ошибка во время сборки:"},
-           /* 24 */      {"Assembly process has finished successfully!" + NL + "Assembled contigs are written to file: CONTIGS" + NL + NL + "Contigs statistics:",
+           /* 24 */      {"Assembly has finished successfully!" + NL + "Assembled contigs are written to file: CONTIGS" + NL + NL + "Contigs statistics:",
                           "Процесс сборки завершился успешно!" + NL + "Собранные контиги записаны в файл: CONTIGS" + NL + NL + "Статистика собранных контигов:"},
            /* 25 */      {"Please select exactly one file!", "Пожалуйста выберите ровно один файл!"},
            /* 26 */      {"Please select files to remove!", "Пожалуйста выберите файлы для удаления!"},
@@ -794,9 +796,20 @@ public class GUI extends JPanel {
 
     // ========================== buttons action methods ========================
 
-    void addFilesAction() {
-        JFileChooser fc = new JFileChooser();
+    File lastDir = new File(".");
+
+    JFileChooser prepareFileChooser(JFileChooser fc) {
         fc.setMultiSelectionEnabled(true);
+        fc.addChoosableFileFilter(new FileNameExtensionFilter("FastQ files (*.fq, *.fastq)", "fastq", "fq"));
+        fc.addChoosableFileFilter(new FileNameExtensionFilter("Fasta files (*.fa, *.fasta, *.fn, *.fna)", "fasta", "fa", "fn", "fna"));
+        fc.addChoosableFileFilter(new FileNameExtensionFilter("Compressed fastq/fasta files (*.gz, *.bz2)", "gz", "bz2"));
+        fc.setAcceptAllFileFilterUsed(true);
+        return fc;
+    }
+
+    void addFilesAction() {
+        JFileChooser fc = new JFileChooser(lastDir);
+        fc = prepareFileChooser(fc);
         int res = fc.showOpenDialog(GUI.this);
         if (res == JFileChooser.APPROVE_OPTION) {
             File[] oldFiles = inputFiles.get();
@@ -807,6 +820,9 @@ public class GUI extends JPanel {
             File[] allFiles = new File[oldFiles.length + newFiles.length];
             System.arraycopy(oldFiles, 0, allFiles, 0, oldFiles.length);
             System.arraycopy(newFiles, 0, allFiles, oldFiles.length, newFiles.length);
+            if (newFiles.length > 0) {
+                lastDir = newFiles[0];
+            }
 
             inputFiles.set(allFiles);
             inFilesTable.updateUI();
@@ -819,6 +835,8 @@ public class GUI extends JPanel {
             JOptionPane.showMessageDialog(frame, UIText[25][curLang]);
         } else {
             JFileChooser fc = new JFileChooser(inputFiles.get()[inFilesTable.getSelectedRow()]);
+            fc = prepareFileChooser(fc);
+            fc.setSelectedFile(inputFiles.get()[inFilesTable.getSelectedRow()]);
             fc.setMultiSelectionEnabled(false);
             int res = fc.showOpenDialog(GUI.this);
             if (res == JFileChooser.APPROVE_OPTION) {
@@ -849,7 +867,7 @@ public class GUI extends JPanel {
     }
 
     void setWorkDirAction() {
-        JFileChooser fc = new JFileChooser(workDir.get());
+        JFileChooser fc = new JFileChooser(new File(workDir.get()));
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int res = fc.showOpenDialog(GUI.this);
         if (res == JFileChooser.APPROVE_OPTION) {
