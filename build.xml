@@ -1,5 +1,5 @@
 <project xmlns:ivy="antlib:org.apache.ivy.ant" name="genome-de-novo" default="first-build" basedir=".">
-    <property name="VERSION" value="1.6.0"/>
+    <property name="VERSION" value="1.6.1"/>
     <tstamp>
         <format property="TODAY" pattern="dd-MMM-yyyy" locale="en"/>
     </tstamp>
