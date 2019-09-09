@@ -104,13 +104,13 @@ Previous versions of the assembler can be found at [genome.ifmo.ru/files/softwar
 ### Publications:
 
 1. Alexandrov A., Kazakov S., Melnikov S., Sergushichev A., Shalyto A., Tsarev F. Combining de Bruijn graph, overlap graph and microassembly for de novo genome assembly / In Proceedings of "Bioinformatics 2012". Stockholm, Sweden. 2012. p. 72. [[Abstract pdf](http://rain.ifmo.ru/~svkazakov/papers/alexandrov-bioinf-2012-abstract.pdf)] [[Poster pdf](http://rain.ifmo.ru/~svkazakov/papers/alexandrov-bioinf-2012-poster.pdf)]
-2. **[Russian]** Сергушичев А., Александров А., Казаков С., Царев Ф., Шалыто А. Совместное применение графа де Брёйна, графа перекрытий и микросборки для de novo сборки генома // Известия Саратовского университета. Новая серия. Серия Математика. Механика. Информатика. 2013. Т. 13, вып. 2, ч. 2, с. 51–57. [[pdf](http://rain.ifmo.ru/~svkazakov/papers/sergushichev-isu-2013.pdf)]
-3. **[Russian]** Александров А., Казаков С., Мельников С., Сергушичев А., Царев Ф. Метод сборки контигов геномных последовательностей на основе совместного применения графов де Брюина и графов перекрытий // Научно-технический вестник информационных технологий, механики и оптики. 2012. № 6 (82), с. 93-98. [[pdf](http://rain.ifmo.ru/~svkazakov/papers/alexandrov-vestnik-itmo-2012.pdf)]
-4. **[Russian]** Александров А., Казаков С., Мельников С., Сергушичев А., Царев Ф., Шалыто А. Метод исправления ошибок в наборе чтений нуклеотидной последовательности // Научно-технический вестник Санкт-Петербургского государственного университета информационных технологий, механики и оптики. 2011. № 5 (75), с. 81-84. [[pdf](http://rain.ifmo.ru/~svkazakov/papers/alexandrov-vestnik-itmo-2011-5.pdf)]
+2. **[In Russian]** Сергушичев А., Александров А., Казаков С., Царев Ф., Шалыто А. Совместное применение графа де Брёйна, графа перекрытий и микросборки для de novo сборки генома // Известия Саратовского университета. Новая серия. Серия Математика. Механика. Информатика. 2013. Т. 13, вып. 2, ч. 2, с. 51–57. [[pdf](http://rain.ifmo.ru/~svkazakov/papers/sergushichev-isu-2013.pdf)]
+3. **[In Russian]** Александров А., Казаков С., Мельников С., Сергушичев А., Царев Ф. Метод сборки контигов геномных последовательностей на основе совместного применения графов де Брюина и графов перекрытий // Научно-технический вестник информационных технологий, механики и оптики. 2012. № 6 (82), с. 93-98. [[pdf](http://rain.ifmo.ru/~svkazakov/papers/alexandrov-vestnik-itmo-2012.pdf)]
+4. **[In Russian]** Александров А., Казаков С., Мельников С., Сергушичев А., Царев Ф., Шалыто А. Метод исправления ошибок в наборе чтений нуклеотидной последовательности // Научно-технический вестник Санкт-Петербургского государственного университета информационных технологий, механики и оптики. 2011. № 5 (75), с. 81-84. [[pdf](http://rain.ifmo.ru/~svkazakov/papers/alexandrov-vestnik-itmo-2011-5.pdf)]
 <br/><br/>
 
 
-Based on the assembler code, several tools have been developed — such as [MetaFast](http://dx.doi.org/10.1093/bioinformatics/btw312) and [MetaCherchant](http://dx.doi.org/10.1093/bioinformatics/btx681).
+Several tools are using the assembler as a library for better processing — such as [MetaFast](http://dx.doi.org/10.1093/bioinformatics/btw312) and [MetaCherchant](http://dx.doi.org/10.1093/bioinformatics/btx681).
 
 
 ## Contact
