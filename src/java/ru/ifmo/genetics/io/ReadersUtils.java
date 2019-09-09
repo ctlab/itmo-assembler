@@ -11,7 +11,6 @@ import ru.ifmo.genetics.io.readers.*;
 import ru.ifmo.genetics.io.sources.ConsecutiveSource;
 import ru.ifmo.genetics.io.sources.NamedSource;
 import ru.ifmo.genetics.io.sources.Source;
-import ru.ifmo.genetics.io.readers.DnaQReaderFromDnaSource;
 import ru.ifmo.genetics.utils.tool.Tool;
 
 import java.io.File;
@@ -97,6 +96,25 @@ public class ReadersUtils {
             return new FastaBZ2Reader(file);
         } else if (fileFormat.startsWith("fastq") || fileFormat.equals("binq")) {
             return new FastaReaderFromXQSource(readDnaQLazy(file));
+        } else {
+            throw new RuntimeException("Illegal format " + fileFormat + ", file " + file.getName());
+        }
+    }
+
+    public static NamedSource<Dna> readDnaLazyTrunc(File file, String fileFormat) throws IOException {
+        if (fileFormat == null) {
+            fileFormat = detectFileFormat(file);
+        }
+        fileFormat = fileFormat.toLowerCase();
+
+        if (fileFormat.equals("fasta")) {
+            return new FastaReader(file);
+        } else if (fileFormat.equals("fasta.gz")) {
+            return new FastaGZReader(file);
+        } else if (fileFormat.equals("fasta.bz2")) {
+            return new FastaBZ2Reader(file);
+        } else if (fileFormat.startsWith("fastq") || fileFormat.equals("binq")) {
+            return new FastaReaderFromXQSourceTrunc(readDnaQLazy(file));
         } else {
             throw new RuntimeException("Illegal format " + fileFormat + ", file " + file.getName());
         }

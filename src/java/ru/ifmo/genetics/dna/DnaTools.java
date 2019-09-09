@@ -5,9 +5,9 @@ import ru.ifmo.genetics.io.formats.QualityFormat;
 import ru.ifmo.genetics.utils.NumUtils;
 
 import java.math.BigInteger;
+import java.util.Random;
 
 public class DnaTools {
-
     public static final int HASH_BASE = 31;
     public static final long HASH_INVERSED_BASE;
     static {
@@ -32,6 +32,8 @@ public class DnaTools {
     public final static byte[] DNAcodes = {'A', 'G', 'C', 'T'};
     public final static byte[] sortedDNAcodes = {'A', 'C', 'G', 'T'};
 
+    private static Random random = new Random();
+
     public static boolean isNucleotide(char c) {
         for (char nuc : NUCLEOTIDES) {
             if (Character.toUpperCase(c) == nuc) {
@@ -42,7 +44,8 @@ public class DnaTools {
     }
 
     public static byte fromChar(char c) {
-        switch (c) {
+        char ch = singleLetterCodeToNucleotide(c);
+        switch (ch) {
             case 'A':
             case 'a':
                 return 0;
@@ -58,6 +61,59 @@ public class DnaTools {
             default:
                 throw new IllegalArgumentException("Incorrect nucleotide char: \"" + c + "\"");
         }
+    }
+
+    private static char singleLetterCodeToNucleotide(char c) {
+        switch(c) {
+            case 'A':
+            case 'a':
+                return c;
+            case 'G':
+            case 'g':
+                return c;
+            case 'C':
+            case 'c':
+                return c;
+            case 'T':
+            case 't':
+                return c;
+            case 'R':
+            case 'r':
+                return randomChoice(new char[]{'G', 'A'});
+            case 'Y':
+            case 'y':
+                return randomChoice(new char[]{'T', 'C'});
+            case 'M':
+            case 'm':
+                return randomChoice(new char[]{'A', 'C'});
+            case 'K':
+            case 'k':
+                return randomChoice(new char[]{'G', 'T'});
+            case 'S':
+            case 's':
+                return randomChoice(new char[]{'G', 'C'});
+            case 'W':
+            case 'w':
+                return randomChoice(new char[]{'A', 'T'});
+            case 'H':
+            case 'h':
+                return randomChoice(new char[]{'A', 'C', 'T'});
+            case 'B':
+            case 'b':
+                return randomChoice(new char[]{'G', 'C', 'T'});
+            case 'V':
+            case 'v':
+                return randomChoice(new char[]{'A', 'C', 'G'});
+            case 'D':
+            case 'd':
+                return randomChoice(new char[]{'A', 'G', 'T'});
+            default:
+                return c;
+        }
+    }
+
+    private static char randomChoice(char[] chars) {
+        return chars[random.nextInt(chars.length)];
     }
 
     public static char toChar(byte b) {
