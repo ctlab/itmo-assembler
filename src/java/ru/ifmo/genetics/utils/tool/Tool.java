@@ -409,7 +409,7 @@ public abstract class Tool {
                 if (shouldContinue) {
                     // OK
                 } else if (forceRun) {
-                    warn("Force run, all data in working directory will be rewritten!");
+                    warn("Force run, all data in working directory will be rewritten!", false);
                 } else {
                     System.err.print("Working directory (" + workDir.get() + "/) "+
                             "contains files from previous run, rewrite them? [Yes(y)/No(n), default:No] ");
@@ -1080,9 +1080,13 @@ public abstract class Tool {
         logger.error(getPrefix(false, false, "ERROR: ", logger) + message + "\n--", e);
     }
     public static void warn(Logger logger, Object message) {
+        warn(logger, message, true);
+    }
+    public static void warn(Logger logger, Object message, boolean needNLFrame) {
         clearProgressImpl();
-        System.err.println("");
-        logger.warn(getPrefix(false, true, "WARNING! ", logger) + message + "\n");
+        if (needNLFrame)
+            System.err.println("");
+        logger.warn(getPrefix(false, true, "WARNING! ", logger) + message + (needNLFrame ? "\n" : ""));
         System.err.print(curProgress);
     }
     public static void info(Logger logger, Object message) {
@@ -1104,6 +1108,9 @@ public abstract class Tool {
     }
     protected void warn(Object message) {
         warn(logger, message);
+    }
+    protected void warn(Object message, boolean needNLFrame) {
+        warn(logger, message, needNLFrame);
     }
     protected void info(Object message) {
         info(logger, message);
