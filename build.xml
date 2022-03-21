@@ -17,16 +17,23 @@
 
 
     <!-- Determine build version -->
-    <exec executable="hg" outputproperty="build.revision">
-        <arg value="id"/>
-        <arg value="-i"/>
+    <exec executable="git" outputproperty="revision">
+        <arg value="rev-parse"/>
+        <arg value="--short"/>
+        <arg value="HEAD"/>
+    </exec>
+    <exec executable="git" outputproperty="changes">
+        <arg value="status"/>
+        <arg value="-s"/>
+        <arg value="-uno"/>
     </exec>
 
     <condition property="dist.version" 
-            value="${VERSION} (build ${build.number}, revision ${build.revision} changes, ${TODAY_TS})"
-            else ="${VERSION} (build ${build.number}, revision ${build.revision}, ${TODAY})" >
-        <contains string="${build.revision}" substring="+"/>
+            value="${VERSION} (revision ${revision}, ${TODAY})"
+            else ="${VERSION} (revision ${revision}+ changes, ${TODAY_TS})" >
+        <equals arg1="${changes}" arg2=""/>
     </condition>
+
     <echo message="${dist.version}" file="VERSION"/>
     <echo message="Version: ${dist.version}"/>
 
@@ -84,7 +91,7 @@
         <ivy:report todir="report" />
     </target>
 
-  <property name="ivy.jar.version" value="2.3.0"/>
+  <property name="ivy.jar.version" value="2.5.0"/>
   <property name="ivy.jar.name" value="ivy-${ivy.jar.version}.jar"/>
   <property name="ivy.home" value="${user.home}/.ivy2"/>
   <available property="ivy.installed" file="${ivy.home}/${ivy.jar.name}"/>
@@ -92,7 +99,7 @@
  
   <target name="ivy.install" unless="ivy.installed">
     <mkdir dir="${ivy.home}"/>
-    <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.jar.version}/${ivy.jar.name}" dest="${ivy.home}/${ivy.jar.name}"/>
+    <get src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.jar.version}/${ivy.jar.name}" dest="${ivy.home}/${ivy.jar.name}"/>
   </target>
  
 
